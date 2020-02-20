@@ -1,0 +1,18 @@
+version: "2.0"
+services:
+  newbackend:
+    build: ./backend
+    restart: always
+    container_name: newbackend
+
+  nginx-host:
+    image: nginx
+    restart: always
+    volumes:
+        - /software/nginx/compose.conf:/etc/nginx/nginx.conf:ro
+        - /software/dashboard:/usr/share/nginx/html
+    ports:
+      - "81:80"
+    links:
+      - newbackend
+    container_name: nginx-host
